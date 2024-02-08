@@ -61,7 +61,7 @@
     <input type="text" id="name" name="name" required><br>
     <label for="message">Message:</label><br>
     <textarea id="message" name="message" rows="4" required></textarea><br>
-    <button type="submit">Send</button>
+    <button type="submit" id="sendMessage">Send</button>
   </form>
 </div>
 
@@ -84,7 +84,7 @@ document.getElementById("contactForm").addEventListener("submit", function(event
   var name = document.getElementById("name").value;
   var message = document.getElementById("message").value;
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", "create_db.py", true);
+  xhr.open("POST", "/create_message", true);
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
