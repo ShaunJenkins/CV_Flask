@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Consultation Messages</title>
+</head>
+<body>
+    <h1>Consultation Messages</h1>
+    <ul>
+        {% for message in messages %}
+        <li><strong>{{ message[1] }}:</strong> {{ message[2] }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
