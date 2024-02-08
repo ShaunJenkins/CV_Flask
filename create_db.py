@@ -4,7 +4,7 @@ import sqlite3
 app = Flask(__name__)
 
 # Create SQLite database connection
-conn = sqlite3.connect('your_database.db')
+conn = sqlite3.connect('database.db')
 cursor = conn.cursor()
 
 @app.route('/create_db.py', methods=['POST'])
