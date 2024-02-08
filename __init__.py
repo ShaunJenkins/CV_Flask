@@ -4,11 +4,11 @@ app = Flask(__name__) #creating flask app name
 
 @app.route('/')
 def home():
-    return render_template("resume_1.html")
+    return render_template("resume_2.html")
 
 @app.route('/resume_2')
 def resume_2():
-    return render_template("resume_2.html")
+    return render_template("resume_1.html")
 
 @app.route('/resume_template')
 def resume_template():
