@@ -14,27 +14,14 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS messages
 # Commit the transaction
 conn.commit()
 
-@app.route('/create_db.py', methods=['POST'])
-def create_entry():
-    data = request.json
-    name = data['name']
-    message = data['message']
-    try:
-        # Insert data into the database
-        cursor.execute('INSERT INTO messages (name, message) VALUES (?, ?)', (name, message))
-        conn.commit()
-        return jsonify({"message": "success"}), 200
-    except Exception as e:
-        conn.rollback()
-        return jsonify({"message": str(e)}), 500
-    finally:
-        conn.close()
+def get_database_connection():
+    return sqlite3.connect('consultation.db')
 
 @app.route('/consultation/5625719273')
 def view_messages():
     try:
         # Connect to SQLite database
-        conn = sqlite3.connect('consultation.db')
+        conn = get_database_connection()
         cursor = conn.cursor()
         
         # Retrieve messages from the database
