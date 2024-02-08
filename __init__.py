@@ -1,18 +1,7 @@
-from flask import Flask,render_template
-from flask import Flask, request, jsonify
+from flask import Flask, render_template, request, jsonify
 import sqlite3
 
-app = Flask(__name__) #creating flask app name
-# Create SQLite database connection
-conn = sqlite3.connect('consultation.db')
-cursor = conn.cursor()
-
-# Create table if it doesn't exist
-cursor.execute('''CREATE TABLE IF NOT EXISTS messages
-                (id INTEGER PRIMARY KEY, name TEXT, message TEXT)''')
-
-# Commit the transaction
-conn.commit()
+app = Flask(__name__)
 
 def get_database_connection():
     return sqlite3.connect('consultation.db')
@@ -35,6 +24,28 @@ def view_messages():
         return render_template('consultation.html', messages=messages)
     except Exception as e:
         return str(e)
+
+@app.route('/create_message', methods=['POST'])
+def create_message():
+    try:
+        data = request.json
+        name = data['name']
+        message = data['message']
+        
+        # Connect to SQLite database
+        conn = get_database_connection()
+        cursor = conn.cursor()
+        
+        # Insert data into the database
+        cursor.execute('INSERT INTO messages (name, message) VALUES (?, ?)', (name, message))
+        
+        # Commit the transaction and close the connection
+        conn.commit()
+        conn.close()
+        
+        return jsonify({"message": "success"}), 200
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
 
 
 @app.route('/')
